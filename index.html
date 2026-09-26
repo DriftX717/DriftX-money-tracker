@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DRIFTX Money Tracker</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: white;
+            background:
+                radial-gradient(circle at 15% 20%, #2563eb, transparent 28%),
+                radial-gradient(circle at 85% 20%, #9333ea, transparent 28%),
+                radial-gradient(circle at 50% 90%, #059669, transparent 30%),
+                #050816;
+            background-size: 200% 200%;
+            animation: moveBackground 12s ease-in-out infinite;
+            padding: 30px 15px;
+        }
+
+        @keyframes moveBackground {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            50% {
+                background-position: 100% 100%;
+            }
+
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        .app {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 52px;
+            margin-bottom: 10px;
+            letter-spacing: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+
+        .question-card {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 18px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 23px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 14px;
+            font-size: 17px;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+            background: #f8fafc;
+            color: #111827;
+        }
+
+        button {
+            border: none;
+            border-radius: 12px;
+            padding: 15px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        #makePlan {
+            width: 100%;
+            margin-top: 10px;
+            background: #22c55e;
+            color: white;
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+        }
+
+        #resetButton {
+            width: 100%;
+            margin-top: 12px;
+            background: #334155;
+            color: white;
+        }
+
+        #plan {
+            margin-top: 30px;
+        }
+
+        .result {
+            background: rgba(2, 6, 23, 0.9);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .result h2 {
+            font-size: 30px;
+            text-align: center;
+        }
+
+        .money-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .money-box {
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .money-box p {
+            margin: 0;
+            color: #cbd5e1;
+        }
+
+        .money-box strong {
+            display: block;
+            margin-top: 8px;
+            font-size: 26px;
+        }
+
+        .success {
+            color: #4ade80;
+        }
+
+        .warning {
+            color: #facc15;
+        }
+
+        .danger {
+            color: #f87171;
+        }
+
+        .tip {
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 14px;
+            background: rgba(59, 130, 246, 0.12);
+            border-left: 4px solid #3b82f6;
+            line-height: 1.6;
+        }
+
+        .error {
+            color: #f87171;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 38px;
+            }
+
+            .money-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <h1>DRIFTX</h1>
+
+    <p class="subtitle">
+        Smart Money Tracker
+    </p>
+
+    <!-- QUESTION 1 -->
+    <div class="question-card">
+        <h2>1. What is your pocket money per month?</h2>
+        <input id="pocketMoney" type="number" min="0" placeholder="Example: 3000">
+    </div>
+
+    <!-- QUESTION 2 -->
+    <div class="question-card">
+        <h2>2. When do you usually spend money?</h2>
+        <input id="spendTime" type="text" placeholder="Example: After school">
+    </div>
+
+    <!-- QUESTION 3 -->
+    <div class="question-card">
+        <h2>3. What do you spend money on?</h2>
+        <input id="spendingType" type="text" placeholder="Example: Snacks, games, football">
+    </div>
+
+    <!-- QUESTION 4 -->
+    <div class="question-card">
+        <h2>4. How much money do you usually spend per month?</h2>
+        <input id="usualSpend" type="number" min="0" placeholder="Example: 1800">
+    </div>
+
+    <!-- QUESTION 5 -->
+    <div class="question-card">
+        <h2>5. What are you saving your money for?</h2>
+        <input id="savingGoal" type="text" placeholder="Example: New football">
+    </div>
+
+    <!-- QUESTION 6 -->
+    <div class="question-card">
+        <h2>6. What does your saving goal cost?</h2>
+        <input id="goalCost" type="number" min="0" placeholder="Example: 5000">
+    </div>
+
+    <!-- QUESTION 7 -->
+    <div class="question-card">
+        <h2>7. How long do you want to save?</h2>
+
+        <input
+            id="saveDuration"
+            type="number"
+            min="1"
+            placeholder="Example: 3"
+        >
+
+        <br><br>
+
+        <select id="durationUnit">
+            <option value="months">Months</option>
+            <option value="weeks">Weeks</option>
+        </select>
+    </div>
+
+    <button id="makePlan">
+        MAKE MY MONEY PLAN 💰
+    </button>
+
+    <button id="resetButton">
+        RESET
+    </button>
+
+    <p id="errorMessage" class="error"></p>
+
+    <div id="plan"></div>
+
+</div>
+
+
+<script>
+
+    // Get the elements from the HTML
+    let pocketMoney = document.getElementById("pocketMoney");
+    let spendTime = document.getElementById("spendTime");
+    let spendingType = document.getElementById("spendingType");
+    let usualSpend = document.getElementById("usualSpend");
+    let savingGoal = document.getElementById("savingGoal");
+    let goalCost = document.getElementById("goalCost");
+    let saveDuration = document.getElementById("saveDuration");
+    let durationUnit = document.getElementById("durationUnit");
+
+    let makePlan = document.getElementById("makePlan");
+    let resetButton = document.getElementById("resetButton");
+
+    let plan = document.getElementById("plan");
+    let errorMessage = document.getElementById("errorMessage");
+
+
+    // When the MAKE MY MONEY PLAN button is clicked
+    makePlan.onclick = function() {
+
+        // Read the user's answers
+        let pocket = Number(pocketMoney.value);
+        let spending = Number(usualSpend.value);
+        let goal = Number(goalCost.value);
+        let duration = Number(saveDuration.value);
+
+        let time = spendTime.value.trim();
+        let spendingOn = spendingType.value.trim();
+        let goalName = savingGoal.value.trim();
+
+        // Check if something important is missing
+        if (
+            pocket <= 0 ||
+            spending < 0 ||
+            goal <= 0 ||
+            duration <= 0 ||
+            time === "" ||
+            spendingOn === "" ||
+            goalName === ""
+        ) {
+
+            errorMessage.textContent =
+                "Please answer all 7 questions correctly.";
+
+            return;
+        }
+
+        // Convert weeks into months
+        let months;
+
+        if (durationUnit.value === "weeks") {
+            months = duration / 4.345;
+        } else {
+            months = duration;
+        }
+
+        // How much must be saved each month?
+        let requiredSaving = goal / months;
+
+        // Money left after normal spending
+        let currentRemaining = pocket - spending;
+
+        // Keep a 10% emergency/buffer amount
+        let safetyBuffer = pocket * 0.10;
+
+        // Maximum amount we can safely use for spending
+        let suggestedSpending = pocket - requiredSaving - safetyBuffer;
+
+        // Stop negative spending suggestions
+        if (suggestedSpending < 0) {
+            suggestedSpending = 0;
+        }
+
+        // Money that remains after planned spending and saving
+        let monthlyLeftover =
+            pocket - suggestedSpending - requiredSaving - safetyBuffer;
+
+        if (monthlyLeftover < 0) {
+            monthlyLeftover = 0;
+        }
+
+        // Determine whether the goal is realistic
+        let message;
+
+        if (currentRemaining >= requiredSaving) {
+
+            message = `
+                <p class="success">
+                    ✅ Your goal looks possible with your current numbers.
+                </p>
+            `;
+
+        } else {
+
+            let extraNeeded = requiredSaving - currentRemaining;
+
+            message = `
+                <p class="warning">
+                    ⚠️ You currently need about
+                    Rs. ${extraNeeded.toFixed(0)}
+                    more per month to reach the goal on time.
+                </p>
+            `;
+        }
+
+        // Create the result
+        plan.innerHTML = `
+
+            <div class="result">
+
+                <h2>YOUR DRIFTX MONEY PLAN 💰</h2>
+
+                <p>
+                    Saving for:
+                    <strong>${goalName}</strong>
+                </p>
+
+                ${message}
+
+                <div class="money-grid">
+
+                    <div class="money-box">
+                        <p>Pocket Money</p>
+                        <strong>Rs. ${pocket.toFixed(0)}</strong>
+                    </div>
+
+                    <div class="money-box">
+                        <p>Usual Spending</p>
+                        <strong>Rs. ${spending.toFixed(0)}</strong>
+                    </div>
+
+                    <div class="money-box">
+                        <p>Required Saving</p>
+                        <strong class="success">
+                            Rs. ${requiredSaving.toFixed(0)}
+                        </strong>
+                    </div>
+
+                    <div class="money-box">
+                        <p>Safety Buffer</p>
+                        <strong class="warning">
+                            Rs. ${safetyBuffer.toFixed(0)}
+                        </strong>
+                    </div>
+
+                    <div class="money-box">
+                        <p>Suggested Spending</p>
+                        <strong>
+                            Rs. ${suggestedSpending.toFixed(0)}
+                        </strong>
+                    </div>
+
+                    <div class="money-box">
+                        <p>Current Remaining</p>
+                        <strong>
+                            Rs. ${Math.max(currentRemaining, 0).toFixed(0)}
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="tip">
+
+                    <strong>DRIFTX ADVICE</strong>
+
+                    <p>
+                        You usually spend money around
+                        <strong>${time}</strong>
+                        on
+                        <strong>${spendingOn}</strong>.
+                    </p>
+
+                    <p>
+                        Try keeping your planned spending near
+                        <strong>Rs. ${suggestedSpending.toFixed(0)}</strong>
+                        and saving about
+                        <strong>Rs. ${requiredSaving.toFixed(0)}</strong>
+                        each month.
+                    </p>
+
+                    <p>
+                        Your goal is
+                        <strong>Rs. ${goal.toFixed(0)}</strong>
+                        and your target period is about
+                        <strong>${months.toFixed(1)} months</strong>.
+                    </p>
+
+                    <p>
+                        This plan estimates savings; it does not guarantee
+                        investment profit or income.
+                    </p>
+
+                </div>
+
+            </div>
+        `;
+    };
+
+
+    // Reset everything
+    resetButton.onclick = function() {
+
+        pocketMoney.value = "";
+        spendTime.value = "";
+        spendingType.value = "";
+        usualSpend.value = "";
+        savingGoal.value = "";
+        goalCost.value = "";
+        saveDuration.value = "";
+
+        durationUnit.value = "months";
+
+        plan.innerHTML = "";
+        errorMessage.textContent = "";
+    };
+
+</script>
+
+</body>
+</html>
